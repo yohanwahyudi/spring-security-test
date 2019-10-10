@@ -1,0 +1,94 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'war'
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'com.gradle.build-scan' version '2.0.2'
+    id "io.freefair.lombok" version "3.8.0"
+}
+
+bootWar {
+	baseName = 'spring-boot-mds'
+	version =  '0.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    
+    /*springboot*/
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-cache')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-hateoas')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-autoconfigure')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf') 
+    
+    /*security*/
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE')  
+    
+    /*ldap*/
+    compile("org.springframework.ldap:spring-ldap-core")
+    compile("org.springframework.security:spring-security-ldap")
+    compile("org.springframework:spring-tx")
+    compile("com.unboundid:unboundid-ldapsdk")
+    
+    compile('net.sourceforge.nekohtml:nekohtml:1.9.22')
+    
+    /*cache*/
+    compile("javax.cache:cache-api:1.1.1")
+    compile("org.ehcache:ehcache:3.8.1")
+	
+	compileOnly('org.springframework.boot:spring-boot-devtools') 
+	compileOnly('org.springframework.boot:spring-boot-starter-tomcat')
+	compileOnly('javax.servlet:javax.servlet-api')
+	
+	/*https://mvnrepository.com/artifact/org.threeten/threetenbp*/
+	//compile('org.threeten:threetenbp:1.4.0')
+	
+	/*bootstrap and jquery*/
+	//compile('org.webjars:bootstrap:4.3.1')
+	//compile('org.webjars:jquery:3.4.1')
+	
+	/*db*/
+    compile('org.mariadb.jdbc:mariadb-java-client:2.0.3')
+    compile('mysql:mysql-connector-java:5.1.45')
+    compile('com.zaxxer:HikariCP:3.3.1')
+    compile('org.apache.commons:commons-dbcp2:2.2.0')
+    //compile('com.h2database:h2:1.4.199')
+    
+    /*commons-beanutils*/
+    compile('commons-beanutils:commons-beanutils:1.9.3')
+    
+    /*passay for password security*/
+    compile('org.passay:passay:1.5.0')
+    
+    /*google guava*/
+    compile('com.google.guava:guava:28.0-jre')
+
+	testCompile("junit:junit")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+}

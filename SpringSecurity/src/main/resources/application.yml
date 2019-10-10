@@ -1,0 +1,54 @@
+server:
+  port: ${PORT:1111}
+  servlet:
+    context-path: /
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    show-sql: true
+    
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog?zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: blog
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+    initialization-mode: ALWAYS
+    continue-on-error: TRUE
+    
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 10
+    
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    prefix: classpath:/templates/
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    # excluded-view-names:
+    # mode: HTML5
+    # prefix: /templates/
+    # suffix: .html
+    # template-resolver-order:
+    # view-names:
+    servlet:
+      content-type: text/html
+
+logging:
+  path: log
+  level:
+    org.hibernate.sql : DEBUG
+
+#logging:
+#  level:
+#      - ".=info"
+#      - "com.memorynotfound=debug"
+#      - "org.springframework=info"
