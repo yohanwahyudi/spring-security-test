@@ -24,10 +24,10 @@
 		-->
 		<!-- Another way to access request param:
 			 <p th:text="${#request.getParameter('q')}" th:unless="${#request.getParameter('q') == null}">Test</p>
-		 -->
+		-->
 		
 		<div th:if="${param.error}"
-         class="alert alert-danger alert-dismissable">
+       			class="alert alert-danger alert-dismissable">
          <p>
           <i class="icon fa fa-ban"></i> <span
            th:text="#{error.login_failed}">Invalid Email and Password.</span>
