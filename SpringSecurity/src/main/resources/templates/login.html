@@ -14,14 +14,46 @@
 
 	<div class="container">
 	<h2 class="form-signin-heading">Login</h2>
+	
+	
 		<form method = "POST" class="form-signin" th:action="@{/login}">
 		
-		<span th:text="${message}"></span>
+		<!-- ${param.*} is to grab the request parameters from the URL -->
+		<!-- since param is multivalued, we can access it with this syntax: 
+			 <p th:text="${param.q[0] + ' ' + param.q[1]}" th:unless="${param.q == null}">Test</p> 
+		-->
+		<!-- Another way to access request param:
+			 <p th:text="${#request.getParameter('q')}" th:unless="${#request.getParameter('q') == null}">Test</p>
+		 -->
 		
-		<input type="text" id="username" name="username" placeholder="Username" class="form-control" /> 
-		<input type="password" id="password" name="password" placeholder="Password" class="form-control" /> 
+		<div th:if="${param.error}"
+         class="alert alert-danger alert-dismissable">
+         <p>
+          <i class="icon fa fa-ban"></i> <span
+           th:text="#{error.login_failed}">Invalid Email and Password.</span>
+         </p>
+        </div>
+        
+        <div th:if="${param.logout}"
+         class="alert alert-info alert-dismissable">
+         <p>
+          <i class="icon fa fa-info"></i> <span
+           th:text="#{info.logout_success}">Logout success.</span>
+         </p>
+        </div>
+        
+        
+        <span th:text="${error}"></span>	
 		
-		<span th:text="${error}"></span>	
+		<label th:text="#{label.username}" th:for="username"></label>
+		<input type="text" id="username" name="username" placeholder="Username" class="form-control" autofocus="autofocus" /> 
+		
+		
+		<input type="password" id="password" name="password" th:placeholder="#{label.password}" class="form-control" /> 
+		
+		
+		
+		<input type="checkbox" name="remember-me"> Remember Me </input>
 			
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 		</form>

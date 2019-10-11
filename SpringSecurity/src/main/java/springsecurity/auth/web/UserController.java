@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import springsecurity.auth.model.Role;
 import springsecurity.auth.model.User;
@@ -35,27 +36,42 @@ public class UserController {
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
+        
+        System.out.println("roles: "+ roleService.getAllRoles());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public ModelAndView registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
-
+        
+        ModelAndView mv = new ModelAndView();
+        
         if (bindingResult.hasErrors()) {
-            return "registration";
+        	
+        	mv.addObject("roles", roleService.getAllRoles());
+        	mv.setViewName("registration");
+            
+        	return mv;
         }
 
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        mv.setViewName("redirect:/welcome");
+        
+        return mv;
     }
     
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+    	
+    	System.out.println("error: " +error);
+    	System.out.println("logout: " +logout);
+    	
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
