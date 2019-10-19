@@ -69,6 +69,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
     	
+    	System.out.println("entering login controller");
     	System.out.println("error: " +error);
     	System.out.println("logout: " +logout);
     	
